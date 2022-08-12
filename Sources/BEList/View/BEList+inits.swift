@@ -4,14 +4,14 @@ import SwiftUI
 extension BEList where HeaderView == EmptyView {
     init(
         viewModel: BECollectionViewModel<T>,
-        cell: @escaping (T?) -> Cell,
+        cellType: Cell.Type,
         @ViewBuilder footerView: () -> FooterView,
         options: Options
     ) {
         self.init(
             viewModel: viewModel,
             headerView: { EmptyView() },
-            cell: cell,
+            cellType: cellType,
             footerView: footerView,
             options: options
         )
@@ -22,13 +22,13 @@ extension BEList where FooterView == EmptyView {
     init(
         viewModel: BECollectionViewModel<T>,
         @ViewBuilder headerView: () -> HeaderView,
-        cell: @escaping (T?) -> Cell,
+        cellType: Cell.Type,
         options: Options
     ) {
         self.init(
             viewModel: viewModel,
             headerView: headerView,
-            cell: cell,
+            cellType: cellType,
             footerView: { EmptyView() },
             options: options
         )
@@ -38,16 +38,15 @@ extension BEList where FooterView == EmptyView {
 extension BEList where HeaderView == EmptyView, FooterView == EmptyView {
     init(
         viewModel: BECollectionViewModel<T>,
-        cell: @escaping (T?) -> Cell,
+        cellType: Cell.Type,
         options: Options
     ) {
         self.init(
             viewModel: viewModel,
             headerView: { EmptyView() },
-            cell: cell,
+            cellType: cellType,
             footerView: { EmptyView() },
             options: options
         )
     }
 }
-

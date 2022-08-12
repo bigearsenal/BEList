@@ -1,22 +1,27 @@
 import SwiftUI
 
-public struct BEList<T: Hashable, HeaderView: View, Cell: View, FooterView: View>: View {
+public protocol CellView: View {
+    static func loaded(_ data: AnyHashable) -> Self
+    static func loading() -> Self
+}
+
+public struct BEList<T: Hashable, HeaderView: View, Cell: CellView, FooterView: View>: View {
     @ObservedObject public var viewModel: BECollectionViewModel<T>
     private let headerView: HeaderView
-    private let cell: (T?) -> Cell // nil for loading scene
+    private let cellType: Cell.Type
     private let footerView: FooterView
     private let options: Options
     
     public init(
         viewModel: BECollectionViewModel<T>,
         @ViewBuilder headerView: () -> HeaderView,
-        cell: @escaping (T?) -> Cell,
+        cellType: Cell.Type,
         @ViewBuilder footerView: () -> FooterView,
         options: Options
     ) {
         self.viewModel = viewModel
         self.headerView = headerView()
-        self.cell = cell
+        self.cellType = cellType
         self.footerView = footerView()
         self.options = options
     }
@@ -26,16 +31,19 @@ public struct BEList<T: Hashable, HeaderView: View, Cell: View, FooterView: View
             headerView
             // data
             ForEach(viewModel.data, id: \.hashValue) { item in
-                cell(item)
+                cellType.loaded(item)
             }
             // loading cell
             if viewModel.state == .loading || viewModel.state == .initializing {
-                ForEach(0..<options.numberOfLoadingCells, id: \.self) {_ in 
-                    cell(nil)
+                ForEach(0..<options.numberOfLoadingCells, id: \.self) {_ in
+                    cellType.loading()
                 }
             }
             footerView
         }
+//        .refreshable {
+//            viewModel.reload()
+//        }
     }
 }
 
