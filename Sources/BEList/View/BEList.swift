@@ -1,55 +1,47 @@
 import SwiftUI
 
-public protocol CellView: View {
-    static func loaded(_ data: AnyHashable) -> Self
-    static func loading() -> Self
-}
-
-public struct BEList<T: Hashable, HeaderView: View, Cell: CellView, FooterView: View>: View {
-    @ObservedObject public var viewModel: BECollectionViewModel<T>
-    private let headerView: HeaderView
-    private let cellType: Cell.Type
-    private let footerView: FooterView
-    private let options: Options
+/// ListView that is data driven
+public struct BEList<HeaderView: View, FooterView: View>: View {
     
-    public init(
-        viewModel: BECollectionViewModel<T>,
-        @ViewBuilder headerView: () -> HeaderView,
-        cellType: Cell.Type,
-        @ViewBuilder footerView: () -> FooterView,
-        options: Options
-    ) {
-        self.viewModel = viewModel
-        self.headerView = headerView()
-        self.cellType = cellType
-        self.footerView = footerView()
-        self.options = options
-    }
+    // MARK: - Public properties
     
+    /// ViewModel that is responsible for data flow
+    public let viewModel: BEListViewModelType
+    
+    /// Optional: Builder for the view on top of everything in ListView
+    @ViewBuilder public var headerView: HeaderView
+    
+    /// Optional: Builder for the view at the bottom of everything in ListView
+    @ViewBuilder public var footerView: FooterView
+    
+    /// Section builders
+    public let sectionsBuilder: ([BESectionData]) -> [BESectionType]
+    
+    // MARK: - Private properties
+    
+    /// Sections' data that are controlled by viewModel's sectionsPublisher
+    @State private var _sections = [BESectionData]()
+    
+    // MARK: - ViewBuilder
+    
+    /// Body of the ListView
     public var body: some View {
         List {
             headerView
-            // data
-            ForEach(viewModel.data, id: \.hashValue) { item in
-                cellType.loaded(item)
-            }
-            // loading cell
-            if viewModel.state == .loading || viewModel.state == .initializing {
-                ForEach(0..<options.numberOfLoadingCells, id: \.self) {_ in
-                    cellType.loading()
-                }
-            }
+            
+            ForEach(
+                sectionsBuilder(_sections).enumerated()
+                    .map {(index: $0, view: $1.anyView)},
+                id: \.index
+            ) { $0.view }
+            
             footerView
         }
         .refreshable {
             await viewModel.reload()
         }
-    }
-}
-
-extension BEList {
-    public struct Options {
-        public let numberOfLoadingCells = 2
-        
+        .onReceive(viewModel.sectionsPublisher) { sections in
+            self._sections = sections
+        }
     }
 }
