@@ -63,7 +63,7 @@ class MockViewModel: BECollectionViewModel<String>, BEListViewModelType {
         } else if result == 1 {
             throw Error.unknown
         } else {
-            return ["Ty", "Phi", "Tai", "Long"] + Array(4..<Int.random(in: 5..<10)).map {"#Friend \($0 + 1)"}
+            return ["Ty", "Phi", "Tai", "Long"] + Array(5..<Int.random(in: 6..<9)).map {"Friend #\($0)"}
         }
     }
     
