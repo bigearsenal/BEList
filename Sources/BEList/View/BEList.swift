@@ -41,9 +41,9 @@ public struct BEList<T: Hashable, HeaderView: View, Cell: CellView, FooterView: 
             }
             footerView
         }
-//        .refreshable {
-//            viewModel.reload()
-//        }
+        .refreshable {
+            await viewModel.reload()
+        }
     }
 }
 
