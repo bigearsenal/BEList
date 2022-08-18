@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "BEList",
     platforms: [
-        .macOS(.v11),
+        .macOS(.v12),
         .iOS(.v14),
         .tvOS(.v10),
         .watchOS(.v3),
