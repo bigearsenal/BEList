@@ -5,7 +5,7 @@ public struct BESectionData: Hashable {
     /// Loading state of the current section
     public let state: BEFetcherState
     /// Data in current section
-    public let data: [AnyHashable]
+    public let items: [AnyHashable]
     /// Optional: Addtional data
     public let info: AnyHashable?
 }

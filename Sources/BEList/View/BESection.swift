@@ -17,6 +17,9 @@ public struct BESection<HeaderView: View, CellView: View, EmptyView: View, Loadi
     
     // MARK: - Public properties
     
+    /// The info of the section
+    public let data: BESectionData
+    
     /// Optional: Builder for the view on top of everything in ListView
     @ViewBuilder public var headerView: HeaderView
     
@@ -30,12 +33,17 @@ public struct BESection<HeaderView: View, CellView: View, EmptyView: View, Loadi
     @ViewBuilder public var footerView: FooterView
     
     /// Builder for each cell of the section
-    public let cellView: (AnyHashable) -> CellView
+    public let cellBuilder: (AnyHashable) -> CellView
     
     // MARK: - Private properties
     
     /// Body of the section
     public var body: some View {
-        fatalError()
+        Group {
+            // all items
+            ForEach(data.items, id: \.hashValue) { item in
+                cellBuilder(item)
+            }
+        }
     }
 }
