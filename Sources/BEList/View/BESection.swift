@@ -13,7 +13,13 @@ extension BESection: BESectionType {
 }
 
 /// Default implementation for BESectionType
-public struct BESection<HeaderView: View, CellView: View, EmptyView: View, LoadingView: View, FooterView: View>: View {
+public struct BESection<
+    HeaderView: View,
+    CellView: View,
+    EmptyView: View,
+    LoadingView: View,
+    FooterView: View
+>: View {
     
     // MARK: - Public properties
     
@@ -40,9 +46,18 @@ public struct BESection<HeaderView: View, CellView: View, EmptyView: View, Loadi
     /// Body of the section
     public var body: some View {
         Group {
-            // all items
-            ForEach(data.items, id: \.hashValue) { item in
-                cellBuilder(item)
+            if data.state == .loaded && data.items.isEmpty {
+                emptyView
+            } else {
+                // all items
+                ForEach(data.items, id: \.hashValue) { item in
+                    cellBuilder(item)
+                }
+                
+                // loading
+                if data.state == .loading || data.state == .initializing {
+                    loadingView
+                }
             }
         }
     }
