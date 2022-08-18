@@ -45,3 +45,50 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
         }
     }
 }
+
+extension BEList where HeaderView == EmptyView {
+    /// Overload initializer to support optional HeaderView
+    init(
+        viewModel: BEListViewModelType,
+        @ViewBuilder footerView: () -> FooterView,
+        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+    ) {
+        self.init(
+            viewModel: viewModel,
+            headerView: { EmptyView() },
+            footerView: footerView,
+            sectionsBuilder: sectionsBuilder
+        )
+    }
+}
+
+extension BEList where FooterView == EmptyView {
+    /// Overload initializer to support optional FooterView
+    init(
+        viewModel: BEListViewModelType,
+        @ViewBuilder headerView: () -> HeaderView,
+        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+    ) {
+        self.init(
+            viewModel: viewModel,
+            headerView: headerView,
+            footerView: { EmptyView() },
+            sectionsBuilder: sectionsBuilder
+        )
+    }
+}
+
+extension BEList where HeaderView == EmptyView, FooterView == EmptyView {
+    /// Overload initializer to support optional HeaderView & FooterView
+    init(
+        viewModel: BEListViewModelType,
+        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+    ) {
+        self.init(
+            viewModel: viewModel,
+            headerView: { EmptyView() },
+            footerView: { EmptyView() },
+            sectionsBuilder: sectionsBuilder
+        )
+    }
+}

@@ -29,13 +29,6 @@ public struct BESection<HeaderView: View, CellView: View, EmptyView: View, Loadi
     @ViewBuilder public var footerView: FooterView
     
     public var body: some View {
-        BEList(viewModel: <#T##BEListViewModelType#>) {
-            <#code#>
-        } footerView: {
-            <#code#>
-        } sectionsBuilder: { <#[BEListSection]#> in
-            <#code#>
-        }
-
+        
     }
 }
