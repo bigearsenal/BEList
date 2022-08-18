@@ -16,8 +16,8 @@ extension BESection: BESectionType {
 public struct BESection<
     HeaderView: View,
     CellView: View,
-    EmptView: View,
-    LoadingView: View,
+    OnEmptyView: View,
+    OnLoadingView: View,
     FooterView: View
 >: View {
     
@@ -30,10 +30,10 @@ public struct BESection<
     @ViewBuilder public var headerView: () -> HeaderView
     
     /// Optional: Builder for ListView when data is empty
-    @ViewBuilder public var emptyView: () -> EmptView
+    @ViewBuilder public var onEmptyView: () -> OnEmptyView
     
     /// Optional: Builder for ListView when data is loading
-    @ViewBuilder public var loadingView: () -> LoadingView // Optional
+    @ViewBuilder public var onLoadingView: () -> OnLoadingView // Optional
     
     /// Optional: Builder for the view at the bottom of everything in ListView
     @ViewBuilder public var footerView: () -> FooterView
@@ -45,15 +45,15 @@ public struct BESection<
     public init(
         data: BESectionData,
         headerView: @escaping () -> HeaderView,
-        emptyView: @escaping () -> EmptView,
-        loadingView: @escaping () -> LoadingView,
+        onEmptyView: @escaping () -> OnEmptyView,
+        onLoadingView: @escaping () -> OnLoadingView,
         footerView: @escaping () -> FooterView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
         self.data = data
         self.headerView = headerView
-        self.emptyView = emptyView
-        self.loadingView = loadingView
+        self.onEmptyView = onEmptyView
+        self.onLoadingView = onLoadingView
         self.footerView = footerView
         self.cellBuilder = cellBuilder
     }
@@ -62,7 +62,7 @@ public struct BESection<
     public var body: some View {
         Group {
             if data.state == .loaded && data.items.isEmpty {
-                emptyView()
+                onEmptyView()
             } else {
                 // all items
                 ForEach(data.items, id: \.hashValue) { item in
@@ -71,7 +71,7 @@ public struct BESection<
                 
                 // loading
                 if data.state == .loading || data.state == .initializing {
-                    loadingView()
+                    onLoadingView()
                 }
             }
         }
@@ -84,16 +84,16 @@ extension BESection where HeaderView == EmptyView {
     /// Overload initializer to support optional HeaderView
     public init(
         data: BESectionData,
-        emptyView: @escaping () -> EmptView,
-        loadingView: @escaping () -> LoadingView,
+        onEmptyView: @escaping () -> OnEmptyView,
+        onLoadingView: @escaping () -> OnLoadingView,
         footerView: @escaping () -> FooterView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
         self.init(
             data: data,
             headerView: { EmptyView() },
-            emptyView: emptyView,
-            loadingView: loadingView,
+            onEmptyView: onEmptyView,
+            onLoadingView: onLoadingView,
             footerView: footerView,
             cellBuilder: cellBuilder
         )
@@ -105,15 +105,15 @@ extension BESection where FooterView == EmptyView {
     public init(
         data: BESectionData,
         headerView: @escaping () -> HeaderView,
-        emptyView: @escaping () -> EmptView,
-        loadingView: @escaping () -> LoadingView,
+        onEmptyView: @escaping () -> OnEmptyView,
+        onLoadingView: @escaping () -> OnLoadingView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
         self.init(
             data: data,
             headerView: headerView,
-            emptyView: emptyView,
-            loadingView: loadingView,
+            onEmptyView: onEmptyView,
+            onLoadingView: onLoadingView,
             footerView: { EmptyView() },
             cellBuilder: cellBuilder
         )
@@ -124,15 +124,15 @@ extension BESection where HeaderView == EmptyView, FooterView == EmptyView {
     /// Overload initializer to support optional HeaderView & FooterView
     public init(
         data: BESectionData,
-        emptyView: @escaping () -> EmptView,
-        loadingView: @escaping () -> LoadingView,
+        onEmptyView: @escaping () -> OnEmptyView,
+        onLoadingView: @escaping () -> OnLoadingView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
         self.init(
             data: data,
             headerView: { EmptyView() },
-            emptyView: emptyView,
-            loadingView: loadingView,
+            onEmptyView: onEmptyView,
+            onLoadingView: onLoadingView,
             footerView: { EmptyView() },
             cellBuilder: cellBuilder
         )
