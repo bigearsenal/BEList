@@ -6,6 +6,8 @@ public struct BESectionData: Hashable {
     public let state: BEFetcherState
     /// Data in current section
     public let items: [AnyHashable]
+    /// Error in current section
+    public let error: AnyHashable?
     /// Optional: Addtional data
     public let info: AnyHashable?
 }

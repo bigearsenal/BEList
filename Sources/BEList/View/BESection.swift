@@ -37,7 +37,7 @@ public struct BESection<
     @ViewBuilder public var onLoadingView: () -> OnLoadingView
     
     /// Optional: Builder for ListView when error occur
-    public let onErrorView: (Error) -> OnErrorView
+    public let onErrorView: (AnyHashable) -> OnErrorView
     
     /// Optional: Builder for the view at the bottom of everything in ListView
     @ViewBuilder public var footerView: () -> FooterView
@@ -51,7 +51,7 @@ public struct BESection<
         headerView: @escaping () -> HeaderView,
         onEmptyView: @escaping () -> OnEmptyView,
         onLoadingView: @escaping () -> OnLoadingView,
-        onErrorView: @escaping (Error) -> OnErrorView,
+        onErrorView: @escaping (AnyHashable) -> OnErrorView,
         footerView: @escaping () -> FooterView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
@@ -79,6 +79,11 @@ public struct BESection<
                 if data.state == .loading || data.state == .initializing {
                     onLoadingView()
                 }
+                
+                // error
+                if let error = data.error {
+                    onErrorView(error)
+                }
             }
         }
     }
@@ -92,7 +97,7 @@ extension BESection where HeaderView == EmptyView {
         data: BESectionData,
         onEmptyView: @escaping () -> OnEmptyView,
         onLoadingView: @escaping () -> OnLoadingView,
-        onErrorView: @escaping (Error) -> OnErrorView,
+        onErrorView: @escaping (AnyHashable) -> OnErrorView,
         footerView: @escaping () -> FooterView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
@@ -115,7 +120,7 @@ extension BESection where FooterView == EmptyView {
         headerView: @escaping () -> HeaderView,
         onEmptyView: @escaping () -> OnEmptyView,
         onLoadingView: @escaping () -> OnLoadingView,
-        onErrorView: @escaping (Error) -> OnErrorView,
+        onErrorView: @escaping (AnyHashable) -> OnErrorView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
         self.init(
@@ -136,7 +141,7 @@ extension BESection where HeaderView == EmptyView, FooterView == EmptyView {
         data: BESectionData,
         onEmptyView: @escaping () -> OnEmptyView,
         onLoadingView: @escaping () -> OnLoadingView,
-        onErrorView: @escaping (Error) -> OnErrorView,
+        onErrorView: @escaping (AnyHashable) -> OnErrorView,
         cellBuilder: @escaping (AnyHashable) -> CellView
     ) {
         self.init(

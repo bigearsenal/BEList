@@ -10,5 +10,6 @@ import Combine
 
 public protocol BEListViewModelType {
     var sectionsPublisher: AnyPublisher<[BESectionData], Never> { get }
+    var errorPublisher: AnyPublisher<Error?, Never> {get}
     func reload() async
 }
