@@ -10,5 +10,5 @@ import Combine
 
 public protocol BEListViewModelType {
     var sectionsPublisher: AnyPublisher<[BESectionData], Never> { get }
-    func reload() async
+    func reload()
 }

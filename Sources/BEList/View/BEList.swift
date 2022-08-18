@@ -50,7 +50,9 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
             footerView()
         }
         .refreshable {
-            await viewModel.reload()
+            await MainActor.run {
+                viewModel.reload()
+            }
         }
         .onReceive(viewModel.sectionsPublisher) { sections in
             self._sections = sections
