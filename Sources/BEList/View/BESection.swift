@@ -37,13 +37,13 @@ public struct BESection<
     @ViewBuilder public var onLoadingView: () -> OnLoadingView
     
     /// Optional: Builder for ListView when error occur
-    public let onErrorView: (AnyHashable) -> OnErrorView
+    @ViewBuilder public let onErrorView: (AnyHashable) -> OnErrorView
     
     /// Optional: Builder for the view at the bottom of everything in ListView
     @ViewBuilder public var footerView: () -> FooterView
     
     /// Builder for each cell of the section
-    public let cellBuilder: (AnyHashable) -> CellView
+    @ViewBuilder public let cellBuilder: (AnyHashable) -> CellView
     
     // MARK: - Initializer
     public init(

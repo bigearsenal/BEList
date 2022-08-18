@@ -35,10 +35,12 @@ struct ContentView: View {
                 data: sectionData,
                 onEmptyView: {Text("No friend found")},
                 onLoadingView: {Text("Loading...")},
-                onErrorView: {_ in Text("Something went wrong, please try again later")})
-            { item -> Text in
-                let text = item as! String
-                return Text(text)
+                onErrorView: {_ in
+                    Text("Something went wrong, please try again later")
+                    .foregroundColor(.red)
+                }
+            ) { item in
+                Text(item as! String)
             }
         }
     }
