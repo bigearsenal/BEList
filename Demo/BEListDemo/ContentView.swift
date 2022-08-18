@@ -18,7 +18,19 @@ struct ContentView: View {
     }
     
     var body: some View {
-        BEList(viewModel: viewModel) { sectionIndex, sectionData in
+        BEList(
+            viewModel: viewModel,
+            headerView: { // Optional, can be omited
+                Text("My friends")
+                    .font(.system(size: 50))
+                
+            },
+            footerView: { // Optional, can be omited
+                Text("All: \(viewModel.data.count) friend(s)")
+                    .font(.system(size: 20))
+                    .foregroundColor(.gray)
+            }
+        ) { sectionIndex, sectionData in
             BESection(
                 data: sectionData,
                 onEmptyView: {Text("No friend found")},
@@ -45,13 +57,13 @@ class MockViewModel: BECollectionViewModel<String>, BEListViewModelType {
     
     override func createRequest() async throws -> [String] {
         try await Task.sleep(nanoseconds: 2_000_000_000)
-        let result = Int.random(in: 0..<5)
+        let result = Int.random(in: 0..<10)
         if result == 0 {
             return []
         } else if result == 1 {
             throw Error.unknown
         } else {
-            return ["Ty", "Phi", "Tai", "Long"]
+            return ["Ty", "Phi", "Tai", "Long"] + Array(4..<Int.random(in: 5..<10)).map {"#Friend \($0 + 1)"}
         }
     }
     
