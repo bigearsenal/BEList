@@ -5,9 +5,10 @@
 //  Created by Geri Borbás on 14/03/2022.
 //
 
+#if os(iOS)
 import SwiftUI
 import Introspect
-
+import UIKit
 
 extension UIScrollView {
 	
@@ -64,3 +65,4 @@ public extension View {
 		self.modifier(OnListRefreshModifier(onValueChanged: onValueChanged))
 	}
 }
+#endif
