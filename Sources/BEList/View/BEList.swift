@@ -2,6 +2,7 @@ import SwiftUI
 
 /// ListView that is data driven
 public struct BEList<HeaderView: View, FooterView: View>: View {
+    public typealias SectionIndex = Int
     
     // MARK: - Public properties
     
@@ -15,7 +16,7 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
     @ViewBuilder public var footerView: () -> FooterView
     
     /// Section builders
-    public let sectionsBuilder: ([BESectionData]) -> [BESectionType]
+    public let sectionBuilder: (SectionIndex, BESectionData) -> BESectionType
     
     // MARK: - Private properties
     
@@ -27,12 +28,12 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
         viewModel: BEListViewModelType,
         @ViewBuilder headerView: @escaping () -> HeaderView,
         @ViewBuilder footerView: @escaping () -> FooterView,
-        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+        sectionBuilder: @escaping (SectionIndex, BESectionData) -> BESectionType
     ) {
         self.viewModel = viewModel
         self.headerView = headerView
         self.footerView = footerView
-        self.sectionsBuilder = sectionsBuilder
+        self.sectionBuilder = sectionBuilder
     }
     
     /// Body of the ListView
@@ -41,7 +42,7 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
             headerView()
             
             ForEach(
-                sectionsBuilder(_sections).enumerated()
+                _sections.enumerated().map { ($0.0, sectionBuilder($0.0, $0.1))}
                     .map {(index: $0, view: $1.anyView)},
                 id: \.index
             ) { $0.view }
@@ -64,13 +65,13 @@ extension BEList where HeaderView == EmptyView {
     public init(
         viewModel: BEListViewModelType,
         @ViewBuilder footerView: @escaping () -> FooterView,
-        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+        sectionBuilder: @escaping (SectionIndex, BESectionData) -> BESectionType
     ) {
         self.init(
             viewModel: viewModel,
             headerView: { EmptyView() },
             footerView: footerView,
-            sectionsBuilder: sectionsBuilder
+            sectionBuilder: sectionBuilder
         )
     }
 }
@@ -80,13 +81,13 @@ extension BEList where FooterView == EmptyView {
     public init(
         viewModel: BEListViewModelType,
         @ViewBuilder headerView: @escaping () -> HeaderView,
-        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+        sectionBuilder: @escaping (SectionIndex, BESectionData) -> BESectionType
     ) {
         self.init(
             viewModel: viewModel,
             headerView: headerView,
             footerView: { EmptyView() },
-            sectionsBuilder: sectionsBuilder
+            sectionBuilder: sectionBuilder
         )
     }
 }
@@ -95,13 +96,13 @@ extension BEList where HeaderView == EmptyView, FooterView == EmptyView {
     /// Overload initializer to support optional HeaderView & FooterView
     public init(
         viewModel: BEListViewModelType,
-        sectionsBuilder: @escaping ([BESectionData]) -> [BESectionType]
+        sectionBuilder: @escaping (SectionIndex, BESectionData) -> BESectionType
     ) {
         self.init(
             viewModel: viewModel,
             headerView: { EmptyView() },
             footerView: { EmptyView() },
-            sectionsBuilder: sectionsBuilder
+            sectionBuilder: sectionBuilder
         )
     }
 }

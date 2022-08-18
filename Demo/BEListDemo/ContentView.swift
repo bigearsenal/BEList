@@ -10,13 +10,23 @@ import BEList
 import Combine
 
 struct ContentView: View {
+    @ObservedObject var viewModel: MockViewModel
+    
+    init(viewModel: MockViewModel) {
+        self.viewModel = viewModel
+        viewModel.reload()
+    }
+    
     var body: some View {
-        BEList(viewModel: MockViewModel()) { sections in
-            sections.map { sectionData in
-                BESection(data: sectionData, onEmptyView: {Text("Empty")}, onLoadingView: {Text("Loading...")}, onErrorView: {_ in Text("Error")}) { item -> Text in
-                    let text = item as! String
-                    return Text(text)
-                }
+        BEList(viewModel: viewModel) { sectionIndex, sectionData in
+            BESection(
+                data: sectionData,
+                onEmptyView: {Text("No friend found")},
+                onLoadingView: {Text("Loading...")},
+                onErrorView: {_ in Text("Something went wrong, please try again later")})
+            { item -> Text in
+                let text = item as! String
+                return Text(text)
             }
         }
     }
@@ -24,7 +34,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: .init())
     }
 }
 
