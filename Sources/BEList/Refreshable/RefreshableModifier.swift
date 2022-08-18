@@ -5,8 +5,8 @@
 //  Created by Geri Borbás on 15/03/2022.
 //
 
+#if os(iOS)
 import SwiftUI
-
 
 struct RefreshAction {
 	
@@ -57,3 +57,5 @@ public extension View {
 		self.modifier(RefreshableModifier(action: action))
 	}
 }
+
+#endif
