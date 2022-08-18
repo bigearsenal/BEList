@@ -10,4 +10,11 @@ public struct BESectionData: Hashable {
     public let error: AnyHashable?
     /// Optional: Addtional data
     public let info: AnyHashable?
+    
+    public init(state: BEFetcherState, items: [AnyHashable], error: AnyHashable?, info: AnyHashable? = nil) {
+        self.state = state
+        self.items = items
+        self.error = error
+        self.info = info
+    }
 }

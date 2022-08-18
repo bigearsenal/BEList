@@ -6,16 +6,52 @@
 //
 
 import SwiftUI
+import BEList
+import Combine
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        BEList(viewModel: MockViewModel()) { sections in
+            sections.map { sectionData in
+                BESection(data: sectionData, onEmptyView: {Text("Empty")}, onLoadingView: {Text("Loading...")}, onErrorView: {_ in Text("Error")}) { item -> Text in
+                    let text = item as! String
+                    return Text(text)
+                }
+            }
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+class MockViewModel: BECollectionViewModel<String>, BEListViewModelType {
+    enum Error: Swift.Error {
+        case unknown
+    }
+    
+    override func createRequest() async throws -> [String] {
+        try await Task.sleep(nanoseconds: 2_000_000_000)
+        let result = Int.random(in: 0..<5)
+        if result == 0 {
+            return []
+        } else if result == 1 {
+            throw Error.unknown
+        } else {
+            return ["Ty", "Phi", "Tai", "Long"]
+        }
+    }
+    
+    var sectionsPublisher: AnyPublisher<[BESectionData], Never> {
+        Publishers.CombineLatest($state, $data)
+            .map { state, data -> [BESectionData] in
+                [
+                    .init(state: state, items: data, error: state == .error ? "Something went wrong": nil)
+                ]
+            }
+            .eraseToAnyPublisher()
     }
 }
