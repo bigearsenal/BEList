@@ -46,6 +46,8 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
     }
 }
 
+// MARK: - Overload initializers
+
 extension BEList where HeaderView == EmptyView {
     /// Overload initializer to support optional HeaderView
     init(
