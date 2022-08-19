@@ -10,9 +10,9 @@ import BEList
 import Combine
 
 struct ContentView: View {
-    @ObservedObject var viewModel: MockViewModel
+    @ObservedObject var viewModel: FriendsViewModel
     
-    init(viewModel: MockViewModel) {
+    init(viewModel: FriendsViewModel) {
         self.viewModel = viewModel
         viewModel.reload()
     }
@@ -40,7 +40,7 @@ struct ContentView: View {
                     .foregroundColor(.red)
                 }
             ) { item in
-                Text(item as! String)
+                Text((item as! Friend).name)
             }
         }
     }
@@ -49,33 +49,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(viewModel: .init())
-    }
-}
-
-class MockViewModel: BECollectionViewModel<String>, BEListViewModelType {
-    enum Error: Swift.Error {
-        case unknown
-    }
-    
-    override func createRequest() async throws -> [String] {
-        try await Task.sleep(nanoseconds: 2_000_000_000)
-        let result = Int.random(in: 0..<10)
-        if result == 0 {
-            return []
-        } else if result == 1 {
-            throw Error.unknown
-        } else {
-            return ["Ty", "Phi", "Tai", "Long"] + Array(5..<Int.random(in: 6..<9)).map {"Friend #\($0)"}
-        }
-    }
-    
-    var sectionsPublisher: AnyPublisher<[BESectionData], Never> {
-        Publishers.CombineLatest($state, $data)
-            .map { state, data -> [BESectionData] in
-                [
-                    .init(state: state, items: data, error: state == .error ? "Something went wrong": nil)
-                ]
-            }
-            .eraseToAnyPublisher()
     }
 }
