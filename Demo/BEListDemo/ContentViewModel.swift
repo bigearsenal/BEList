@@ -21,13 +21,23 @@ class ContentViewModel: ObservableObject, BEListViewModelType {
             cryptoCurrenciesViewModel.$state,
             cryptoCurrenciesViewModel.$data
         )
-            .map { state, data -> BESectionData in
-                .init(
-                    layoutType: .lazyVStack,
-                    state: state,
-                    items: data,
-                    error: state == .error ? "Something went wrong": nil
-                )
+            .map { state, data -> [BESectionData] in
+                let firstSectionData = data.count >= 3 ? Array(data.prefix(upTo: 3)): data
+                let secondSectionData = data.count > 3 ? Array(data[3..<data.count]): []
+                return [
+                    .init(
+                        layoutType: .lazyVStack,
+                        state: state,
+                        items: firstSectionData,
+                        error: state == .error ? "Something went wrong": nil
+                    ),
+                    .init(
+                        layoutType: .lazyVStack,
+                        state: state,
+                        items: secondSectionData,
+                        error: nil
+                    )
+                ]
             }
         
         let nftSectionsPublisher = Publishers.CombineLatest(
@@ -47,7 +57,7 @@ class ContentViewModel: ObservableObject, BEListViewModelType {
             cryptoCurrencySectionsPublisher,
             nftSectionsPublisher
         )
-            .map {[$0, $1]}
+            .map {$0 + [$1]}
             .eraseToAnyPublisher()
     }
     

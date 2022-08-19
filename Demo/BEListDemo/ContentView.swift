@@ -32,18 +32,18 @@ struct ContentView: View {
                 data: sectionData,
                 headerView: { // Optional, can be omited
                     HStack {
-                        Text(sectionIndex == 0 ? "SPL Tokens": "NFTs").font(.title).padding()
+                        Text(sectionIndex == 0 ? "SPL Tokens": sectionIndex == 1 ? "Hidden tokens": "NFTs").font(.title).padding()
                         Spacer()
                     }
                 },
-                onEmptyView: {Text(sectionIndex == 0 ? "No tokens found": "No NFT found")},
+                onEmptyView: {Text(sectionIndex < 2 ? "No tokens found": "No NFT found")},
                 onLoadingView: {Text("Loading...")},
                 onErrorView: {_ in
                     HStack {
                         Text("Something went wrong, please try again later")
                             .foregroundColor(.red)
                         Button {
-                            sectionIndex == 0 ? viewModel.cryptoCurrenciesViewModel.reload(): viewModel.nftsViewModel.reload()
+                            sectionIndex < 2 ? viewModel.cryptoCurrenciesViewModel.reload(): viewModel.nftsViewModel.reload()
                         } label: {
                             Text("Retry")
                         }
