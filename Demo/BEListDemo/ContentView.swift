@@ -37,7 +37,7 @@ struct ContentView: View {
                     }
                 },
                 onEmptyView: {Text(sectionIndex < 2 ? "No tokens found": "No NFT found")},
-                onLoadingView: {Text("Loading...")},
+                onLoadingView: { ProgressView() },
                 onErrorView: {_ in
                     HStack {
                         Text("Something went wrong, please try again later")
