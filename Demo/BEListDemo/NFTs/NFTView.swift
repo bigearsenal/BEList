@@ -13,7 +13,7 @@ struct NFTView: View {
         VStack {
             HStack {
                 Spacer()
-                Rectangle().frame(width: 80, height: 80)
+                Rectangle().aspectRatio(contentMode: .fill)
                 Spacer()
             }
             Text(nft.name)

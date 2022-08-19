@@ -23,16 +23,19 @@ class NFTsViewModel: BECollectionViewModel<NFT> {
         } else if result == 1 {
             throw Error.unknown
         } else {
-            return [
-                .init(name: "Angry dog"),
-                .init(name: "Smiled dog"),
-                .init(name: "Normal dog"),
-                .init(name: "Faking dog"),
-                .init(name: "Smoking dog"),
-                .init(name: "Walking dog"),
-                .init(name: "fun dog"),
-                .init(name: "some dog")
-            ]
+            return Array(
+                [
+                    .init(name: "Angry dog"),
+                    .init(name: "Smiled dog"),
+                    .init(name: "Normal dog"),
+                    .init(name: "Faking dog"),
+                    .init(name: "Smoking dog"),
+                    .init(name: "Walking dog"),
+                    .init(name: "fun dog"),
+                    .init(name: "some dog")
+                ]
+                    .prefix(.random(in: 1...8))
+            )
         }
     }
 }

@@ -23,16 +23,19 @@ class CryptoCurrenciesViewModel: BECollectionViewModel<CryptoCurrency> {
         } else if result == 1 {
             throw Error.unknown
         } else {
-            return [
-                .init(name: "Bitcoin", symbol: "BTC", price: 24900, amount: .random(in: 0..<1)),
-                .init(name: "Etherum", symbol: "ETH", price: 2000, amount: .random(in: 1..<10)),
-                .init(name: "Solana", symbol: "SOL", price: 100, amount: .random(in: 300..<400)),
-                .init(name: "Serum", symbol: "SRM", price: 1, amount: .random(in: 1..<10)),
-                .init(name: "Crycoin", symbol: "CRYY", price: 1, amount: .random(in: 1..<10)),
-                .init(name: "Dogecoin", symbol: "DOGE", price: 1, amount: .random(in: 1..<10)),
-                .init(name: "Shiba INU", symbol: "SHIB", price: 1, amount: .random(in: 1..<10)),
-                .init(name: "Lido DAO", symbol: "LDO", price: 3, amount: .random(in: 1..<10))
-            ]
+            return Array(
+                [
+                    .init(name: "Bitcoin", symbol: "BTC", price: 24900, amount: .random(in: 0..<1)),
+                    .init(name: "Etherum", symbol: "ETH", price: 2000, amount: .random(in: 1..<10)),
+                    .init(name: "Solana", symbol: "SOL", price: 100, amount: .random(in: 300..<400)),
+                    .init(name: "Serum", symbol: "SRM", price: 1, amount: .random(in: 1..<10)),
+                    .init(name: "Crycoin", symbol: "CRYY", price: 1, amount: .random(in: 1..<10)),
+                    .init(name: "Dogecoin", symbol: "DOGE", price: 1, amount: .random(in: 1..<10)),
+                    .init(name: "Shiba INU", symbol: "SHIB", price: 1, amount: .random(in: 1..<10)),
+                    .init(name: "Lido DAO", symbol: "LDO", price: 3, amount: .random(in: 1..<10))
+                ]
+                    .prefix(.random(in: 1...8))
+           )
         }
     }
 }
