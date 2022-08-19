@@ -7,30 +7,6 @@
 
 import SwiftUI
 import BEList
-import Combine
-
-@MainActor
-class ContentViewModel: ObservableObject, BEListViewModelType {
-    private let cryptoCurrenciesViewModel = CryptoCurrenciesViewModel()
-    
-    var sectionsPublisher: AnyPublisher<[BESectionData], Never> {
-        
-        let cryptoCurrencySectionsPublisher = Publishers.CombineLatest(
-            cryptoCurrenciesViewModel.$state,
-            cryptoCurrenciesViewModel.$data
-        )
-            .map { state, data -> BESectionData in
-                .init(state: state, items: data, error: state == .error ? "Something went wrong": nil)
-            }
-        
-        return cryptoCurrencySectionsPublisher.map {[$0]}
-            .eraseToAnyPublisher()
-    }
-    
-    func reload() {
-        cryptoCurrenciesViewModel.reload()
-    }
-}
 
 struct ContentView: View {
     @ObservedObject var viewModel: ContentViewModel
@@ -56,18 +32,22 @@ struct ContentView: View {
                 data: sectionData,
                 headerView: { // Optional, can be omited
                     HStack {
-                        Text("SPL Tokens").font(.title).padding()
+                        Text(sectionIndex == 0 ? "SPL Tokens": "NFTs").font(.title).padding()
                         Spacer()
                     }
                 },
-                onEmptyView: {Text("No tokens found")},
+                onEmptyView: {Text(sectionIndex == 0 ? "No tokens found": "No NFT found")},
                 onLoadingView: {Text("Loading...")},
                 onErrorView: {_ in
                     Text("Something went wrong, please try again later")
                     .foregroundColor(.red)
                 }
-            ) { index, item in
-                CryptoCurrencyView(item: item as! CryptoCurrency)
+            ) { index, item -> AnyView in
+                if let crypto = item as? CryptoCurrency {
+                    return AnyView(CryptoCurrencyView(item: crypto))
+                } else {
+                    return AnyView(NFTView(nft: item as! NFT))
+                }
             }
         }
     }

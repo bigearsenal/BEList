@@ -16,7 +16,7 @@ class CryptoCurrenciesViewModel: BECollectionViewModel<CryptoCurrency> {
     }
     
     override func createRequest() async throws -> [CryptoCurrency] {
-        try await Task.sleep(nanoseconds: 2_000_000_000)
+        try await Task.sleep(nanoseconds: Bool.random() ? 1_000_000_000: 2_000_000_000)
         let result = Int.random(in: 0..<10)
         if result == 0 {
             return []
@@ -33,14 +33,6 @@ class CryptoCurrenciesViewModel: BECollectionViewModel<CryptoCurrency> {
                 .init(name: "Shiba INU", symbol: "SHIB", price: 1, amount: .random(in: 1..<10)),
                 .init(name: "Lido DAO", symbol: "LDO", price: 3, amount: .random(in: 1..<10))
             ]
-        }
-    }
-}
-
-extension Array {
-    func chunked(into size: Int) -> [[Element]] {
-        return stride(from: 0, to: count, by: size).map {
-            Array(self[$0 ..< Swift.min($0 + size, count)])
         }
     }
 }
