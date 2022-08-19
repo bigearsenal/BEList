@@ -21,7 +21,7 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
     // MARK: - Private properties
     
     /// Sections' data that are controlled by viewModel's sectionsPublisher
-    @State private var _sections = [BESectionData]()
+    @State private var sections = [BESectionData]()
     
     // MARK: - Initializer
     public init(
@@ -38,16 +38,25 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
     
     /// Body of the ListView
     public var body: some View {
-        List {
-            headerView()
+        ScrollView {
+            RefreshableView {
+                
+                headerView()
+                
+                ForEach(sections.enumerated().map{(index: $0.0, data: $0.1)}, id: \.0) { index, sectionData in
+                    switch sectionData.layoutType {
+                    case .lazyVStack:
+                        LazyVStack {
+                            sectionBuilder(index, sectionData).anyView
+                        }
+                    case .lazyVGrid:
+                        sectionBuilder(index, sectionData).anyView
+                    }
+                }
+                    
+                footerView()
+            }
             
-            ForEach(
-                _sections.enumerated().map { ($0.0, sectionBuilder($0.0, $0.1))}
-                    .map {(index: $0, view: $1.anyView)},
-                id: \.index
-            ) { $0.view }
-            
-            footerView()
         }
         .refreshable {
             await MainActor.run {
@@ -55,7 +64,7 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
             }
         }
         .onReceive(viewModel.sectionsPublisher) { sections in
-            self._sections = sections
+            self.sections = sections
         }
     }
 }
