@@ -1,7 +1,8 @@
 import Foundation
+import SwiftUI
 
 /// Struct contains all information which is needed for a BESection
-public struct BESectionData: Hashable {
+public struct BESectionData {
     /// Layout type
     public let layoutType: BESectionLayoutType
     /// Loading state of the current section
@@ -23,7 +24,7 @@ public struct BESectionData: Hashable {
 }
 
 /// Layout type for section
-public enum BESectionLayoutType: String, Hashable {
+public enum BESectionLayoutType {
     case lazyVStack
-    case lazyVGrid
+    case lazyVGrid(layoutBuilder: (AnyHashable) -> GridItem)
 }
