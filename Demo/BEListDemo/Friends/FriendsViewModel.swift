@@ -8,6 +8,7 @@
 import Foundation
 import BEList
 import Combine
+import SwiftUI
 
 class FriendsViewModel: BECollectionViewModel<Friend>, BEListViewModelType {
     enum Error: Swift.Error {
@@ -22,7 +23,7 @@ class FriendsViewModel: BECollectionViewModel<Friend>, BEListViewModelType {
         } else if result == 1 {
             throw Error.unknown
         } else {
-            return Array(0..<Int.random(in: 5..<1000)).map {.init(name: "Friend #\($0)")}
+            return Array(0..<Int.random(in: 5..<1000)).map {.init(name: "Friend #\($0 + 1)")}
         }
     }
     
@@ -31,7 +32,16 @@ class FriendsViewModel: BECollectionViewModel<Friend>, BEListViewModelType {
             .map { state, data -> [BESectionData] in
                 let sections = data.chunked(into: 10).enumerated()
                     .map { index, data -> BESectionData in
-                            .init(layoutType: index % 2 == 0 ? .lazyVStack: .lazyVGrid, state: state, items: data, error: state == .error ? "Something went wrong": nil)
+                        .init(
+                            layoutType: index % 2 == 0 ? .lazyVStack: .lazyVGrid(columns: [
+                                GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude)),
+                                GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude)),
+                                GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude))
+                            ]),
+                            state: state,
+                            items: data,
+                            error: state == .error ? "Something went wrong": nil
+                        )
                     }
                 
                 if sections.isEmpty {
