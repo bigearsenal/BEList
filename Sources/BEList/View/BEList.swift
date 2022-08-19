@@ -49,8 +49,12 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
                         LazyVStack {
                             sectionBuilder(index, sectionData).anyView
                         }
-                    case .lazyVGrid(let layoutBuilder):
-                        LazyVGrid(columns: sectionData.items.map {layoutBuilder($0)}) {
+                    case .lazyVGrid:
+                        LazyVGrid(columns: sectionData.state == .loaded && sectionData.items.count > 0 ? [
+                            GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude)),
+                            GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude)),
+                            GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude))
+                        ]: [GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude))]) {
                             sectionBuilder(index, sectionData).anyView
                         }
                     }

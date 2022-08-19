@@ -22,17 +22,34 @@ class FriendsViewModel: BECollectionViewModel<Friend>, BEListViewModelType {
         } else if result == 1 {
             throw Error.unknown
         } else {
-            return [.init(name: "Ty"), .init(name: "Phi"), .init(name: "Tai"), .init(name: "Long")] + Array(5..<Int.random(in: 1000..<1009)).map {.init(name: "Friend #\($0))")}
+            return Array(0..<Int.random(in: 5..<1000)).map {.init(name: "Friend #\($0)")}
         }
     }
     
     var sectionsPublisher: AnyPublisher<[BESectionData], Never> {
         Publishers.CombineLatest($state, $data)
             .map { state, data -> [BESectionData] in
-                [
-                    .init(state: state, items: data, error: state == .error ? "Something went wrong": nil)
-                ]
+                let sections = data.chunked(into: 10).enumerated()
+                    .map { index, data -> BESectionData in
+                            .init(layoutType: index % 2 == 0 ? .lazyVStack: .lazyVGrid, state: state, items: data, error: state == .error ? "Something went wrong": nil)
+                    }
+                
+                if sections.isEmpty {
+                    return [
+                        .init(state: state, items: data, error: state == .error ? "Something went wrong": nil)
+                    ]
+                }
+                
+                return sections.reduce([], {$0 + [$1]})
             }
             .eraseToAnyPublisher()
+    }
+}
+
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
     }
 }
