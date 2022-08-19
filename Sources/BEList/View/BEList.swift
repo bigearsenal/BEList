@@ -44,20 +44,7 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
                 headerView()
                 
                 ForEach(sections.enumerated().map{(index: $0.0, data: $0.1)}, id: \.0) { index, sectionData in
-                    switch sectionData.layoutType {
-                    case .lazyVStack:
-                        LazyVStack {
-                            sectionBuilder(index, sectionData).anyView
-                        }
-                    case .lazyVGrid(let columns):
-                        LazyVGrid(
-                            columns: sectionData.state == .loaded && sectionData.items.count > 0 ?
-                                columns:
-                                [GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude))]
-                            ) {
-                            sectionBuilder(index, sectionData).anyView
-                        }
-                    }
+                    sectionBuilder(index, sectionData).anyView
                 }
                     
                 footerView()

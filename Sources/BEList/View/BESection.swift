@@ -68,9 +68,30 @@ public struct BESection<
     
     /// Body of the section
     public var body: some View {
-        Group {
+        VStack {
             headerView()
             
+            switch data.layoutType {
+            case .lazyVStack:
+                LazyVStack {
+                    content
+                }
+            case .lazyVGrid(let columns):
+                LazyVGrid(
+                    columns: data.state == .loaded && data.items.count > 0 ?
+                        columns:
+                        [GridItem(.flexible(minimum: 0, maximum: .greatestFiniteMagnitude))]
+                    ) {
+                    content
+                }
+            }
+            
+            footerView()
+        }
+    }
+    
+    private var content: some View {
+        Group {
             if data.state == .loaded && data.items.isEmpty {
                 onEmptyView()
             } else {
@@ -89,8 +110,6 @@ public struct BESection<
                     onErrorView(error)
                 }
             }
-            
-            footerView()
         }
     }
 }
