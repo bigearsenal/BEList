@@ -24,6 +24,12 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
     @State private var sections = [BESectionData]()
     
     // MARK: - Initializer
+    /// BEList that is fully data driven
+    /// - Parameters:
+    ///   - viewModel: viewModel to drive the data flow
+    ///   - headerView: (Optional) header view that is on top of the list
+    ///   - footerView: (Optional) footer view that is at the bottom of the list
+    ///   - sectionBuilder: Sections' builder
     public init(
         viewModel: BEListViewModelType,
         @ViewBuilder headerView: @escaping () -> HeaderView,

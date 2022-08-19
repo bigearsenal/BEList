@@ -48,6 +48,15 @@ public struct BESection<
     @ViewBuilder public let cellBuilder: (ItemIndex, AnyHashable) -> CellView
     
     // MARK: - Initializer
+    /// Default BESection
+    /// - Parameters:
+    ///   - data: section's data
+    ///   - headerView: headerView that is on top of this section
+    ///   - onEmptyView: the view that will be shown when the section is empty
+    ///   - onLoadingView: the view that will be shown when the data on the section is being loaded
+    ///   - onErrorView: the view that will be shown when there is any error on loading data in section
+    ///   - footerView: footerView that is at the bottom of the section
+    ///   - cellBuilder: View builder for each cells in section
     public init(
         data: BESectionData,
         headerView: @escaping () -> HeaderView,
