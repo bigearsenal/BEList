@@ -7,6 +7,9 @@
 
 import Foundation
 
-struct Friend: Hashable {
+struct CryptoCurrency: Hashable {
     let name: String
+    let symbol: String
+    let price: Double?
+    let amount: Double?
 }

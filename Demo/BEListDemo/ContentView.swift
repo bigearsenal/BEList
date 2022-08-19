@@ -9,10 +9,33 @@ import SwiftUI
 import BEList
 import Combine
 
-struct ContentView: View {
-    @ObservedObject var viewModel: FriendsViewModel
+@MainActor
+class ContentViewModel: ObservableObject, BEListViewModelType {
+    private let cryptoCurrenciesViewModel = CryptoCurrenciesViewModel()
     
-    init(viewModel: FriendsViewModel) {
+    var sectionsPublisher: AnyPublisher<[BESectionData], Never> {
+        
+        let cryptoCurrencySectionsPublisher = Publishers.CombineLatest(
+            cryptoCurrenciesViewModel.$state,
+            cryptoCurrenciesViewModel.$data
+        )
+            .map { state, data -> BESectionData in
+                .init(state: state, items: data, error: state == .error ? "Something went wrong": nil)
+            }
+        
+        return cryptoCurrencySectionsPublisher.map {[$0]}
+            .eraseToAnyPublisher()
+    }
+    
+    func reload() {
+        cryptoCurrenciesViewModel.reload()
+    }
+}
+
+struct ContentView: View {
+    @ObservedObject var viewModel: ContentViewModel
+    
+    init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
         viewModel.reload()
     }
@@ -21,12 +44,10 @@ struct ContentView: View {
         BEList(
             viewModel: viewModel,
             headerView: { // Optional, can be omited
-                Text("My friends")
-                    .font(.system(size: 50))
-                
+                HeaderView()
             },
             footerView: { // Optional, can be omited
-                Text("All: \(viewModel.data.count) friend(s)")
+                Text("End of list")
                     .font(.system(size: 20))
                     .foregroundColor(.gray)
             }
@@ -40,7 +61,7 @@ struct ContentView: View {
                     .foregroundColor(.red)
                 }
             ) { item in
-                Text((item as! Friend).name)
+                CryptoCurrencyView(item: item as! CryptoCurrency)
             }
         }
     }
