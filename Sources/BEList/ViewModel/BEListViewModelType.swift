@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 public protocol BEListViewModelType {
     var sectionsPublisher: AnyPublisher<[BESectionData], Never> { get }
     func reload()
