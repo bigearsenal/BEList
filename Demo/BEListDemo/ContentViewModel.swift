@@ -25,13 +25,13 @@ class ContentViewModel: ObservableObject, BEListViewModelType {
                 let firstSectionData = data.count >= 3 ? Array(data.prefix(upTo: 3)): data
                 let secondSectionData = data.count > 3 ? Array(data[3..<data.count]): []
                 return [
-                    .init(
+                    .init( // SPL Tokens
                         layoutType: .lazyVStack,
                         state: state,
                         items: firstSectionData,
                         error: state == .error ? "Something went wrong": nil
                     ),
-                    .init(
+                    .init( // Hidden Tokens
                         layoutType: .lazyVStack,
                         state: state,
                         items: secondSectionData,
@@ -45,7 +45,7 @@ class ContentViewModel: ObservableObject, BEListViewModelType {
             nftsViewModel.$data
         )
             .map { state, data -> BESectionData in
-                .init(
+                .init( // NFTs
                     layoutType: .lazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]), // 2 columns
                     state: state,
                     items: data,
