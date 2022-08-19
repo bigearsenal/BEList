@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B3651DC28AF28CD00BD59E3 /* FriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651DB28AF28CD00BD59E3 /* FriendsViewModel.swift */; };
-		3B3651DF28AF290A00BD59E3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651DE28AF290A00BD59E3 /* Friend.swift */; };
+		3B3651DC28AF28CD00BD59E3 /* CryptoCurrenciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651DB28AF28CD00BD59E3 /* CryptoCurrenciesViewModel.swift */; };
+		3B3651DF28AF290A00BD59E3 /* CryptoCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651DE28AF290A00BD59E3 /* CryptoCurrency.swift */; };
+		3B3651E128AF4E7C00BD59E3 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651E028AF4E7C00BD59E3 /* HeaderView.swift */; };
+		3B3651E328AF539B00BD59E3 /* CryptoCurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651E228AF539B00BD59E3 /* CryptoCurrencyView.swift */; };
+		3B3651E628AF596D00BD59E3 /* NFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651E528AF596D00BD59E3 /* NFT.swift */; };
+		3B3651E828AF599300BD59E3 /* NFTsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651E728AF599300BD59E3 /* NFTsViewModel.swift */; };
+		3B3651EA28AF5A2B00BD59E3 /* NFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651E928AF5A2B00BD59E3 /* NFTView.swift */; };
+		3B3651EC28AF5AAB00BD59E3 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3651EB28AF5AAB00BD59E3 /* ContentViewModel.swift */; };
 		3BDDB1EA28AE3B6F00C8E6EA /* BEListDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDB1E928AE3B6F00C8E6EA /* BEListDemoApp.swift */; };
 		3BDDB1EC28AE3B6F00C8E6EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDB1EB28AE3B6F00C8E6EA /* ContentView.swift */; };
 		3BDDB1EE28AE3B7000C8E6EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BDDB1ED28AE3B7000C8E6EA /* Assets.xcassets */; };
@@ -37,8 +43,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3B3651DB28AF28CD00BD59E3 /* FriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewModel.swift; sourceTree = "<group>"; };
-		3B3651DE28AF290A00BD59E3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		3B3651DB28AF28CD00BD59E3 /* CryptoCurrenciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrenciesViewModel.swift; sourceTree = "<group>"; };
+		3B3651DE28AF290A00BD59E3 /* CryptoCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrency.swift; sourceTree = "<group>"; };
+		3B3651E028AF4E7C00BD59E3 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		3B3651E228AF539B00BD59E3 /* CryptoCurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoCurrencyView.swift; sourceTree = "<group>"; };
+		3B3651E528AF596D00BD59E3 /* NFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFT.swift; sourceTree = "<group>"; };
+		3B3651E728AF599300BD59E3 /* NFTsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsViewModel.swift; sourceTree = "<group>"; };
+		3B3651E928AF5A2B00BD59E3 /* NFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTView.swift; sourceTree = "<group>"; };
+		3B3651EB28AF5AAB00BD59E3 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		3BDDB1E628AE3B6F00C8E6EA /* BEListDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BEListDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BDDB1E928AE3B6F00C8E6EA /* BEListDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BEListDemoApp.swift; sourceTree = "<group>"; };
 		3BDDB1EB28AE3B6F00C8E6EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,13 +90,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3B3651DD28AF28FF00BD59E3 /* Friends */ = {
+		3B3651DD28AF28FF00BD59E3 /* CryptoCurrencies */ = {
 			isa = PBXGroup;
 			children = (
-				3B3651DB28AF28CD00BD59E3 /* FriendsViewModel.swift */,
-				3B3651DE28AF290A00BD59E3 /* Friend.swift */,
+				3B3651DB28AF28CD00BD59E3 /* CryptoCurrenciesViewModel.swift */,
+				3B3651DE28AF290A00BD59E3 /* CryptoCurrency.swift */,
+				3B3651E228AF539B00BD59E3 /* CryptoCurrencyView.swift */,
 			);
-			path = Friends;
+			path = CryptoCurrencies;
+			sourceTree = "<group>";
+		};
+		3B3651E428AF568D00BD59E3 /* NFTs */ = {
+			isa = PBXGroup;
+			children = (
+				3B3651E528AF596D00BD59E3 /* NFT.swift */,
+				3B3651E728AF599300BD59E3 /* NFTsViewModel.swift */,
+				3B3651E928AF5A2B00BD59E3 /* NFTView.swift */,
+			);
+			path = NFTs;
 			sourceTree = "<group>";
 		};
 		3BDDB1DD28AE3B6F00C8E6EA = {
@@ -114,7 +137,10 @@
 			children = (
 				3BDDB1E928AE3B6F00C8E6EA /* BEListDemoApp.swift */,
 				3BDDB1EB28AE3B6F00C8E6EA /* ContentView.swift */,
-				3B3651DD28AF28FF00BD59E3 /* Friends */,
+				3B3651EB28AF5AAB00BD59E3 /* ContentViewModel.swift */,
+				3B3651E028AF4E7C00BD59E3 /* HeaderView.swift */,
+				3B3651DD28AF28FF00BD59E3 /* CryptoCurrencies */,
+				3B3651E428AF568D00BD59E3 /* NFTs */,
 				3BDDB1ED28AE3B7000C8E6EA /* Assets.xcassets */,
 				3BDDB1EF28AE3B7000C8E6EA /* Preview Content */,
 			);
@@ -294,10 +320,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B3651EA28AF5A2B00BD59E3 /* NFTView.swift in Sources */,
+				3B3651E128AF4E7C00BD59E3 /* HeaderView.swift in Sources */,
 				3BDDB1EC28AE3B6F00C8E6EA /* ContentView.swift in Sources */,
+				3B3651E328AF539B00BD59E3 /* CryptoCurrencyView.swift in Sources */,
+				3B3651EC28AF5AAB00BD59E3 /* ContentViewModel.swift in Sources */,
 				3BDDB1EA28AE3B6F00C8E6EA /* BEListDemoApp.swift in Sources */,
-				3B3651DC28AF28CD00BD59E3 /* FriendsViewModel.swift in Sources */,
-				3B3651DF28AF290A00BD59E3 /* Friend.swift in Sources */,
+				3B3651E628AF596D00BD59E3 /* NFT.swift in Sources */,
+				3B3651E828AF599300BD59E3 /* NFTsViewModel.swift in Sources */,
+				3B3651DC28AF28CD00BD59E3 /* CryptoCurrenciesViewModel.swift in Sources */,
+				3B3651DF28AF290A00BD59E3 /* CryptoCurrency.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

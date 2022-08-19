@@ -7,12 +7,11 @@
 
 import SwiftUI
 import BEList
-import Combine
 
 struct ContentView: View {
-    @ObservedObject var viewModel: FriendsViewModel
+    @ObservedObject var viewModel: ContentViewModel
     
-    init(viewModel: FriendsViewModel) {
+    init(viewModel: ContentViewModel) {
         self.viewModel = viewModel
         viewModel.reload()
     }
@@ -21,26 +20,34 @@ struct ContentView: View {
         BEList(
             viewModel: viewModel,
             headerView: { // Optional, can be omited
-                Text("My friends")
-                    .font(.system(size: 50))
-                
+                HeaderView()
             },
             footerView: { // Optional, can be omited
-                Text("All: \(viewModel.data.count) friend(s)")
+                Text("End of list")
                     .font(.system(size: 20))
                     .foregroundColor(.gray)
             }
         ) { sectionIndex, sectionData in
             BESection(
                 data: sectionData,
-                onEmptyView: {Text("No friend found")},
+                headerView: { // Optional, can be omited
+                    HStack {
+                        Text(sectionIndex == 0 ? "SPL Tokens": "NFTs").font(.title).padding()
+                        Spacer()
+                    }
+                },
+                onEmptyView: {Text(sectionIndex == 0 ? "No tokens found": "No NFT found")},
                 onLoadingView: {Text("Loading...")},
                 onErrorView: {_ in
                     Text("Something went wrong, please try again later")
                     .foregroundColor(.red)
                 }
-            ) { item in
-                Text((item as! Friend).name)
+            ) { index, item -> AnyView in
+                if let crypto = item as? CryptoCurrency {
+                    return AnyView(CryptoCurrencyView(item: crypto))
+                } else {
+                    return AnyView(NFTView(nft: item as! NFT))
+                }
             }
         }
     }
