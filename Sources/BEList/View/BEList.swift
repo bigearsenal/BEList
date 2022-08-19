@@ -49,8 +49,10 @@ public struct BEList<HeaderView: View, FooterView: View>: View {
                         LazyVStack {
                             sectionBuilder(index, sectionData).anyView
                         }
-                    case .lazyVGrid:
-                        sectionBuilder(index, sectionData).anyView
+                    case .lazyVGrid(let layoutBuilder):
+                        LazyVGrid(columns: sectionData.items.map {layoutBuilder($0)}) {
+                            sectionBuilder(index, sectionData).anyView
+                        }
                     }
                 }
                     
