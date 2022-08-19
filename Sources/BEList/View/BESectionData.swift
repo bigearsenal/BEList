@@ -1,7 +1,7 @@
 import Foundation
 
 /// Struct contains all information which is needed for a BESection
-public struct BESectionData: Hashable {
+public struct BESectionData {
     /// Loading state of the current section
     public let state: BEFetcherState
     /// Data in current section
