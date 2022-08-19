@@ -54,7 +54,13 @@ struct ContentView: View {
         ) { sectionIndex, sectionData in
             BESection(
                 data: sectionData,
-                onEmptyView: {Text("No friend found")},
+                headerView: { // Optional, can be omited
+                    HStack {
+                        Text("SPL Tokens").font(.title).padding()
+                        Spacer()
+                    }
+                },
+                onEmptyView: {Text("No tokens found")},
                 onLoadingView: {Text("Loading...")},
                 onErrorView: {_ in
                     Text("Something went wrong, please try again later")

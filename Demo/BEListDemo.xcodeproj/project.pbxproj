@@ -92,6 +92,13 @@
 			path = CryptoCurrencies;
 			sourceTree = "<group>";
 		};
+		3B3651E428AF568D00BD59E3 /* NFTs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NFTs;
+			sourceTree = "<group>";
+		};
 		3BDDB1DD28AE3B6F00C8E6EA = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +128,7 @@
 				3BDDB1EB28AE3B6F00C8E6EA /* ContentView.swift */,
 				3B3651E028AF4E7C00BD59E3 /* HeaderView.swift */,
 				3B3651DD28AF28FF00BD59E3 /* CryptoCurrencies */,
+				3B3651E428AF568D00BD59E3 /* NFTs */,
 				3BDDB1ED28AE3B7000C8E6EA /* Assets.xcassets */,
 				3BDDB1EF28AE3B7000C8E6EA /* Preview Content */,
 			);

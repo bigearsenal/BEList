@@ -11,7 +11,7 @@ struct HeaderView: View {
     var body: some View {
         VStack {
             Text("My Wallet")
-                .font(.system(size: 30))
+                .font(.system(size: 50))
             HStack {
                 Button {
                     print("Edit button was tapped")

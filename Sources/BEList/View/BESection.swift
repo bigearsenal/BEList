@@ -69,6 +69,8 @@ public struct BESection<
     /// Body of the section
     public var body: some View {
         Group {
+            headerView()
+            
             if data.state == .loaded && data.items.isEmpty {
                 onEmptyView()
             } else {
@@ -87,6 +89,8 @@ public struct BESection<
                     onErrorView(error)
                 }
             }
+            
+            footerView()
         }
     }
 }
