@@ -51,9 +51,19 @@ struct ContentView: View {
                 }
             ) { index, item -> AnyView in
                 if let crypto = item as? CryptoCurrency {
-                    return AnyView(CryptoCurrencyView(item: crypto))
+                    return AnyView(
+                        CryptoCurrencyView(item: crypto)
+                            .onTapGesture {
+                                print(crypto)
+                            }
+                    )
                 } else {
-                    return AnyView(NFTView(nft: item as! NFT))
+                    return AnyView(
+                        NFTView(nft: item as! NFT)
+                            .onTapGesture {
+                                print(item)
+                            }
+                    )
                 }
             }
         }
