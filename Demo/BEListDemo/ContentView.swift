@@ -60,7 +60,7 @@ struct ContentView: View {
                     Text("Something went wrong, please try again later")
                     .foregroundColor(.red)
                 }
-            ) { item in
+            ) { index, item in
                 CryptoCurrencyView(item: item as! CryptoCurrency)
             }
         }
