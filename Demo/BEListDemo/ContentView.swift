@@ -39,8 +39,15 @@ struct ContentView: View {
                 onEmptyView: {Text(sectionIndex == 0 ? "No tokens found": "No NFT found")},
                 onLoadingView: {Text("Loading...")},
                 onErrorView: {_ in
-                    Text("Something went wrong, please try again later")
-                    .foregroundColor(.red)
+                    HStack {
+                        Text("Something went wrong, please try again later")
+                            .foregroundColor(.red)
+                        Button {
+                            sectionIndex == 0 ? viewModel.cryptoCurrenciesViewModel.reload(): viewModel.nftsViewModel.reload()
+                        } label: {
+                            Text("Retry")
+                        }
+                    }
                 }
             ) { index, item -> AnyView in
                 if let crypto = item as? CryptoCurrency {

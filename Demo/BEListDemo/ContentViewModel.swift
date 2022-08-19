@@ -12,8 +12,8 @@ import SwiftUI
 
 @MainActor
 class ContentViewModel: ObservableObject, BEListViewModelType {
-    private let cryptoCurrenciesViewModel = CryptoCurrenciesViewModel()
-    private let nftsViewModel = NFTsViewModel()
+    let cryptoCurrenciesViewModel = CryptoCurrenciesViewModel()
+    let nftsViewModel = NFTsViewModel()
     
     var sectionsPublisher: AnyPublisher<[BESectionData], Never> {
         
@@ -23,6 +23,7 @@ class ContentViewModel: ObservableObject, BEListViewModelType {
         )
             .map { state, data -> BESectionData in
                 .init(
+                    layoutType: .lazyVStack,
                     state: state,
                     items: data,
                     error: state == .error ? "Something went wrong": nil
