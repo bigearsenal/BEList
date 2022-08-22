@@ -111,7 +111,7 @@ open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]> {
         return newData
     }
 
-    public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
+    public func setState(_ state: BEListState, withData data: [AnyHashable]? = nil) {
         self.state = state
         if let data = data as? [T] { overrideData(by: data) }
     }

@@ -26,7 +26,7 @@ open class BEStreamViewModel<Item: Hashable>: ObservableObject {
 
     // MARK: - Subject
     
-    @Published public var state = BEFetcherState.initializing
+    @Published public var state = BEListState.initializing
 
     // MARK: - Initializer
 

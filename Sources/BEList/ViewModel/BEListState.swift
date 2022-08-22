@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum BEFetcherState {
+public enum BEListState {
     case initializing
     case loading
     case loaded

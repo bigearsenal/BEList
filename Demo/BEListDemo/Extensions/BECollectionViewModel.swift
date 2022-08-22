@@ -84,7 +84,7 @@ open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]> {
         return newData
     }
     
-    public func setState(_ state: BEFetcherState, withData data: [AnyHashable]? = nil) {
+    public func setState(_ state: BEListState, withData data: [AnyHashable]? = nil) {
         self.state = state
         if let data = data as? [T] {
             overrideData(by: data)
@@ -196,7 +196,7 @@ open class BEViewModel<T: Hashable>: ObservableObject {
     public var task: Task<Void, Error>?
     
     @Published public var data: T
-    @Published public var state: BEFetcherState = .initializing
+    @Published public var state: BEListState = .initializing
     @Published public var error: Error?
     
     // MARK: - Subject

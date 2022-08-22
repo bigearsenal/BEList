@@ -6,7 +6,7 @@ public struct BESectionData: Hashable {
     /// Layout type
     public let layoutType: BESectionLayoutType
     /// Loading state of the current section
-    public let state: BEFetcherState
+    public let state: BEListState
     /// Data in current section
     public let items: [AnyHashable]
     /// Error in current section
@@ -14,7 +14,7 @@ public struct BESectionData: Hashable {
     /// Optional: Addtional data
     public let info: AnyHashable?
     
-    public init(layoutType: BESectionLayoutType = .lazyVStack, state: BEFetcherState, items: [AnyHashable], error: AnyHashable?, info: AnyHashable? = nil) {
+    public init(layoutType: BESectionLayoutType = .lazyVStack, state: BEListState, items: [AnyHashable], error: AnyHashable?, info: AnyHashable? = nil) {
         self.layoutType = layoutType
         self.state = state
         self.items = items
