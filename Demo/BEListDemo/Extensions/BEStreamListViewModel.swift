@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BEList
 
 open class BEStreamListViewModel<T: Hashable>: BEStreamViewModel<[T]> {
     // MARK: - Properties

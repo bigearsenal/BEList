@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import BEList
 
 @MainActor
 open class BEStreamViewModel<Item: Hashable>: ObservableObject {

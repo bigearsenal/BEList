@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import BEList
 
 open class BECollectionViewModel<T: Hashable>: BEViewModel<[T]> {
     // MARK: - Properties
