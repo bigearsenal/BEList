@@ -16,7 +16,7 @@ extension UIScrollView {
 		static var onValueChanged: UInt8 = 0
 	}
 	
-	public typealias ValueChangedAction = ((_ refreshControl: UIRefreshControl) -> Void)
+	typealias ValueChangedAction = ((_ refreshControl: UIRefreshControl) -> Void)
 	
 	var onValueChanged: ValueChangedAction? {
 		get {
@@ -27,7 +27,7 @@ extension UIScrollView {
 		}
 	}
 	
-	public func onRefresh(_ onValueChanged: @escaping ValueChangedAction) {
+	func onRefresh(_ onValueChanged: @escaping ValueChangedAction) {
 		if refreshControl == nil {
 			let refreshControl = UIRefreshControl()
 			refreshControl.addTarget(
@@ -59,7 +59,7 @@ struct OnListRefreshModifier: ViewModifier {
 }
 
 
-public extension View {
+extension View {
 	
 	func onRefresh(onValueChanged: @escaping UIScrollView.ValueChangedAction) -> some View {
 		self.modifier(OnListRefreshModifier(onValueChanged: onValueChanged))
